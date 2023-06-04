@@ -16,18 +16,20 @@ namespace Pharm.DLL.Repositories
             this.connection = connection;
         }
 
-        public void CreateUserOrder(UserOrder userOrder)
+        public int CreateUserOrder(UserOrder userOrder)
         {
-            using (var command = new SqliteCommand("INSERT INTO UserOrders (UserId, OrderDate, Price, StatusId, ProductPrice,Address) VALUES (@UserId, @OrderDate, @Price, @StatusId,@Address,@Number)", connection))
+            using (var con = connection)
             {
-                command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
-                command.Parameters.Add(new SqliteParameter("@OrderDate", userOrder.OrderDate));
-                command.Parameters.Add(new SqliteParameter("@Price", userOrder.Price));
-                command.Parameters.Add(new SqliteParameter("@StatusId", userOrder.StatusId));
-                command.Parameters.Add(new SqliteParameter("@Address", userOrder.Address));
-                command.Parameters.Add(new SqliteParameter("@Number", userOrder.Number));
-
-                command.ExecuteNonQuery();
+                using (var command = new SqliteCommand("INSERT INTO UserOrders (UserId, OrderDate, Price, StatusId, ProductPrice,Address) OUTPUT INSERTED.ID VALUES (@UserId, @OrderDate, @Price, @StatusId,@Address,@Number)", connection))
+                {
+                    command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
+                    command.Parameters.Add(new SqliteParameter("@OrderDate", userOrder.OrderDate));
+                    command.Parameters.Add(new SqliteParameter("@Price", userOrder.Price));
+                    command.Parameters.Add(new SqliteParameter("@StatusId", userOrder.StatusId));
+                    command.Parameters.Add(new SqliteParameter("@Address", userOrder.Address));
+                    command.Parameters.Add(new SqliteParameter("@Number", userOrder.Number));
+                    return (int)command.ExecuteScalar();
+                }
             }
         }
 

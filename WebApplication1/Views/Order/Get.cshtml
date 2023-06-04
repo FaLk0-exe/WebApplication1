@@ -1,0 +1,43 @@
+﻿@using Pharm.DAL.entity;
+@using Pharm.DAL;
+@model List<UserOrder>
+table class="table">
+<thead>
+    <tr>
+        <th>
+            Номер замовлення
+        </th>
+        <th>
+            Дата замовлення
+        </th>
+        <th>
+            Ціна
+        </th>
+        <th>
+            Роль
+        </th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id.ToString("0000")
+            </td>
+            <td>
+                @item.OrderDate.ToString("dd.MM.yyyy HH:mm:ss")
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>
+                @StatusHelper.GetTitle(item.StatusId)
+            </td>
+            <td>
+                @Html.ActionLink("Деталі", "Details", new {  id=item.Id  }) |
+            </td>
+        </tr>
+    }
+</tbody>
+</table>

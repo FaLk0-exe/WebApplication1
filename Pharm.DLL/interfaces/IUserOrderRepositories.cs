@@ -6,7 +6,7 @@ namespace Pharm.DLL.Interfaces
 {
     public interface IUserOrderRepository
     {
-        void CreateUserOrder(UserOrder userOrder);
+        int CreateUserOrder(UserOrder userOrder);
 
         void UpdateUserOrder(UserOrder userOrder);
 

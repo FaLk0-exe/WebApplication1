@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 
 namespace Pharm.DAL.entity;
 
@@ -14,6 +15,8 @@ public partial class OrderDetail
     public double TotalPrice { get; set; }
 
     public double ProductPrice { get; set; }
+
+    public long UserOrderId { get; set; }
 
 
 }

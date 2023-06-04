@@ -1,0 +1,77 @@
+﻿@using Pharm.DAL;
+@model OrderDetailsModel
+
+<dl class="row">
+    <dt class="col-sm-2">
+        Номер замовлення
+    </dt>
+    <dd class="col-sm-10">
+        @Model.UserOrder.Id.ToString("D4")
+    </dd>
+    <dt class="col-sm-2">
+        Дата замовлення
+    </dt>
+    <dd class="col-sm-10">
+        @Model.UserOrder.OrderDate.ToString("dd.MM.yyyy HH:mm:ss")
+    </dd>
+    <dt class="col-sm-2">
+        Ім'я клієнту
+    </dt>
+    <dd class="col-sm-10">
+        Егор
+    </dd>
+    <dd class="col-sm-2">
+        Номер телефону
+    </dd>
+    <dd class="col-sm-10">
+        @Model.UserOrder.Number
+    </dd>
+    <dd class="col-sm-2">
+        Адреса
+    </dd>
+    <dd class="col-sm-10">
+        @Model.UserOrder.Address
+    </dd>
+    <dd class="col-sm-2">
+        Статус замовлення
+    </dd>
+    <dd class="col-sm-10">
+        @StatusHelper.GetTitle(Model.UserOrder.StatusId)
+    </dd>
+</dl>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Назва товару
+            </th>
+            <th>
+                Кількість
+            </th>
+            <th>
+                Ціна за шт.
+            </th>
+            <th>
+                Усього
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@Model.Products.First(s=>s.Id==item.ProductId).Pname</td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @item.ProductPrice
+                </td>
+                <td>
+                    @item.TotalPrice
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
