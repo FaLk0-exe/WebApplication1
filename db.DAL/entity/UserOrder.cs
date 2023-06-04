@@ -15,4 +15,8 @@ public partial class UserOrder
 
     public long StatusId { get; set; }
 
+    public string Address { get; set; }
+
+    public string Number { get; set; }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
+using Pharm.DAL.entity;
 using Pharm.DLL.Interfaces;
 
 
@@ -17,12 +18,14 @@ namespace Pharm.DLL.Repositories
 
         public void CreateUserOrder(UserOrder userOrder)
         {
-            using (var command = new SqliteCommand("INSERT INTO UserOrders (UserId, OrderDate, Price, StatusId) VALUES (@UserId, @OrderDate, @Price, @StatusId)", connection))
+            using (var command = new SqliteCommand("INSERT INTO UserOrders (UserId, OrderDate, Price, StatusId, ProductPrice,Address) VALUES (@UserId, @OrderDate, @Price, @StatusId,@Address,@Number)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
                 command.Parameters.Add(new SqliteParameter("@OrderDate", userOrder.OrderDate));
                 command.Parameters.Add(new SqliteParameter("@Price", userOrder.Price));
                 command.Parameters.Add(new SqliteParameter("@StatusId", userOrder.StatusId));
+                command.Parameters.Add(new SqliteParameter("@Address", userOrder.Address));
+                command.Parameters.Add(new SqliteParameter("@Number", userOrder.Number));
 
                 command.ExecuteNonQuery();
             }
@@ -30,13 +33,15 @@ namespace Pharm.DLL.Repositories
 
         public void UpdateUserOrder(UserOrder userOrder)
         {
-            using (var command = new SqliteCommand("UPDATE UserOrders SET UserId = @UserId, OrderDate = @OrderDate, Price = @Price, StatusId = @StatusId WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("UPDATE UserOrders SET UserId = @UserId, OrderDate = @OrderDate, Price = @Price, StatusId = @StatusId,Address=@Address,Number=@Number WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", userOrder.Id));
                 command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
                 command.Parameters.Add(new SqliteParameter("@OrderDate", userOrder.OrderDate));
                 command.Parameters.Add(new SqliteParameter("@Price", userOrder.Price));
                 command.Parameters.Add(new SqliteParameter("@StatusId", userOrder.StatusId));
+                command.Parameters.Add(new SqliteParameter("@Address", userOrder.Address));
+                command.Parameters.Add(new SqliteParameter("@Number", userOrder.Number));
 
                 command.ExecuteNonQuery();
             }
@@ -72,7 +77,9 @@ namespace Pharm.DLL.Repositories
                             UserId = (long)reader["UserId"],
                             StatusId = (long)reader["StatusId"],
                             Price = (double)reader["Price"],
-                            OrderDate = (DateTime)reader["OrderDate"]
+                            OrderDate = (DateTime)reader["OrderDate"],
+                            Address = (string)reader["Address"],
+                            Number = (string)reader["Number"]
                         };
 
                         return userOrder;
@@ -101,7 +108,9 @@ namespace Pharm.DLL.Repositories
                             UserId = (long)reader["UserId"],
                             StatusId = (long)reader["StatusId"],
                             Price = (double)reader["Price"],
-                            OrderDate = (DateTime)reader["OrderDate"]
+                            OrderDate = (DateTime)reader["OrderDate"],
+                            Address = (string)reader["Address"],
+                            Number = (string)reader["Number"]
                         };
                         userOrders.Add(userOrder);
                     }
@@ -110,18 +119,6 @@ namespace Pharm.DLL.Repositories
             return userOrders;
         }
 
-        public partial class UserOrder
-        {
-            public long Id { get; set; }
-
-            public long UserId { get; set; }
-
-            public double Price { get; set; }
-
-            public DateTime OrderDate { get; set; }
-
-            public long StatusId { get; set; }
-
-        }
+       
     }
 }

@@ -17,13 +17,12 @@ namespace Pharm.DLL.Repositories
 
         public void CreateUser(User user)
         {
-            using (var command = new SqliteCommand("INSERT INTO Users (Name, Password, BirthDate,Address,Number) VALUES (@Name, @Password, @BirthDate,@Address,@Number)", connection))
+            using (var command = new SqliteCommand("INSERT INTO Users (Name, Password, BirthDate) VALUES (@Name, @Password, @BirthDate)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Name", user.Name));
                 command.Parameters.Add(new SqliteParameter("@Password", user.Password));
                 command.Parameters.Add(new SqliteParameter("@BirthDate", user.BirthDate));
-                command.Parameters.Add(new SqliteParameter("@Address", user.Address));
-                command.Parameters.Add(new SqliteParameter("@Number", user.Number));
+
 
                 command.ExecuteNonQuery();
             }
@@ -31,14 +30,13 @@ namespace Pharm.DLL.Repositories
 
         public void UpdateUser(User user)
         {
-            using (var command = new SqliteCommand("UPDATE Users SET Name = @Name, Password = @Password, BirthDate = @BirthDate, Address = @Address, Number = @Number WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("UPDATE Users SET Name = @Name, Password = @Password, BirthDate = @BirthDate WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", user.Id));
                 command.Parameters.Add(new SqliteParameter("@Name", user.Name));
                 command.Parameters.Add(new SqliteParameter("@Password", user.Password));
                 command.Parameters.Add(new SqliteParameter("@BirthDate", user.BirthDate));
-                command.Parameters.Add(new SqliteParameter("@Address", user.Address));
-                command.Parameters.Add(new SqliteParameter("@Number", user.Number));
+               
 
                 command.ExecuteNonQuery();
             }
@@ -70,8 +68,7 @@ namespace Pharm.DLL.Repositories
                             Name = (string)reader["Name"],
                             Password = (string)reader["Password"],
                             BirthDate = (DateTime)reader["BirthDate"],
-                            Address = (string)reader["Address"],
-                            Number = (string)reader["Number"]
+
                         };
 
                         return user;
@@ -98,8 +95,6 @@ namespace Pharm.DLL.Repositories
                             Name = (string)reader["Name"],
                             Password = (string)reader["Password"],
                             BirthDate = (DateTime)reader["BirthDate"],
-                            Address = (string)reader["Address"],
-                            Number = (string)reader["Number"]
                         };
 
                         users.Add(user);

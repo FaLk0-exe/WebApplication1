@@ -15,7 +15,5 @@ public partial class OrderDetail
 
     public double ProductPrice { get; set; }
 
-    public string Address { get; set; }
 
-    public string Number { get; set; }
 }
