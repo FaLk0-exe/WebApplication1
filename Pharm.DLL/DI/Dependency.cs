@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.DependencyInjection;
 using Pharm.DLL.Interfaces;
 using Pharm.DLL.Repositories;
 using Pharm.DLL.Services;
@@ -14,7 +14,7 @@ namespace Pharm.DLL.DI
         public static void AddDependencies(this IServiceCollection services)
         {
                
-            services.AddSingleton<SqliteConnection>(provider => new SqliteConnection("Data Source=C:\\Users\\User\\source\\repos\\Pharm\\db.DAL\\user.db"));
+            services.AddSingleton<SqliteConnection>(provider => new SqliteConnection("Data Source=C:\\Users\\aprox\\OneDrive\\Рабочий стол\\Flaffyy\\db.DAL\\user.db"));
             
 
             services.AddTransient<IOrderDetailsRepository, OrderDetailsRep>();

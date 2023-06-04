@@ -1,5 +1,39 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model List<CartItem>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Продукт</th>
+            <th>Ціна</th>
+            <th>Кількість</th>
+            <th>Ітого</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="align-middle">@item.Title</td>
+                <td class="align-middle">@item.Price.ToString("C")</td>
+                <td>
+                    <div class="input-group">
+                        <a class="btn btn-outline-secondary" type="button" asp-action="Decrease" asp-route-id="@item.Id">-</a>
+                        <input type="text" class="form-control" style="text-align:center" value="@item.Count" readonly>
+                        <a class="btn btn-outline-secondary" type="button" asp-action="Increase" asp-route-id="@item.Id">+</a>
+                    </div>
+                </td>
+                <td class="align-middle">@((item.Price * item.Count).ToString("C"))</td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Remove" asp-route-id="@item.Id">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.Any())
+{
+    <span>Ітого: @Model.Sum(s=>s.Count*s.Price).ToString("C")</span>
+    <br>
+    <br>
+    <a class="btn btn-primary" asp-action="Create" asp-controller="Order">Оформити замовлення</a>
 }
