@@ -17,12 +17,14 @@ namespace Pharm.DLL.Repositories
         public void CreateOrderDetails(OrderDetail orderDetail)
         {
             connection.Open();
-            using (var command = new SqliteCommand("INSERT INTO OrderDetails (ProductId, Quantity, TotalPrice, ProductPrice) VALUES (@ProductId, @Quantity, @TotalPrice, @ProductPrice)", connection))
+            using (var command = new SqliteCommand("INSERT INTO OrderDetails (ProductId, Quantity, TotalPrice, ProductPrice,Address) VALUES (@ProductId, @Quantity, @TotalPrice, @ProductPrice,@Address,@Number)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@ProductId", orderDetail.ProductId));
                 command.Parameters.Add(new SqliteParameter("@Quantity", orderDetail.Quantity));
                 command.Parameters.Add(new SqliteParameter("@TotalPrice", orderDetail.TotalPrice));
                 command.Parameters.Add(new SqliteParameter("@ProductPrice", orderDetail.ProductPrice));
+                command.Parameters.Add(new SqliteParameter("@Address", orderDetail.Address));
+                command.Parameters.Add(new SqliteParameter("@Number", orderDetail.Number));
 
                 command.ExecuteNonQuery();
             }
@@ -32,13 +34,16 @@ namespace Pharm.DLL.Repositories
         public void UpdateOrderDetails(OrderDetail orderDetail)
         {
             connection.Open();
-            using (var command = new SqliteCommand("UPDATE OrderDetails set ProductId = @ProductId, Quantity = @Quantity,TotalPrice = @TotalPrice,ProductPrice = @ProductPrice WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("UPDATE OrderDetails set ProductId = @ProductId, Quantity = @Quantity,TotalPrice = @TotalPrice,ProductPrice = @ProductPrice,Address=@Address,Number=@Number WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", orderDetail.Id));
                 command.Parameters.Add(new SqliteParameter("@ProductId", orderDetail.ProductId));
                 command.Parameters.Add(new SqliteParameter("@Quantity", orderDetail.Quantity));
                 command.Parameters.Add(new SqliteParameter("@TotalPrice", orderDetail.TotalPrice));
                 command.Parameters.Add(new SqliteParameter("@ProductPrice", orderDetail.ProductPrice));
+                command.Parameters.Add(new SqliteParameter("@Address", orderDetail.Address));
+                command.Parameters.Add(new SqliteParameter("@Number", orderDetail.Number));
+
 
                 command.ExecuteNonQuery();
             }
@@ -77,7 +82,9 @@ namespace Pharm.DLL.Repositories
                             ProductId = (long)reader["ProductId"],
                             Quantity = (long)reader["Quantity"],
                             TotalPrice = (double)reader["TotalPrice"],
-                            ProductPrice = (double)reader["ProductPrice"]
+                            ProductPrice = (double)reader["ProductPrice"],
+                            Address = (string)reader["Address"],
+                            Number = (string)reader["Number"]
                         };
                         connection.Close();
                         return orderDetail;
@@ -108,7 +115,9 @@ namespace Pharm.DLL.Repositories
                             ProductId = (long)reader["ProductId"],
                             Quantity = (long)reader["Quantity"],
                             TotalPrice = (double)reader["TotalPrice"],
-                            ProductPrice = (double)reader["ProductPrice"]
+                            ProductPrice = (double)reader["ProductPrice"],
+                            Address = (string)reader["Address"],
+                            Number = (string)reader["Number"]
                         };
                         orderDetails.Add(orderDetail);
                     }

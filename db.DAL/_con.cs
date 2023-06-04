@@ -33,7 +33,7 @@ namespace Create
                     " PName TEXT NOT NULL," +
                     " Price REAL NOT NULL," +
                     " Description TEXT NOT NULL," +
-                    "IsActive BOOL NOR NULL," +
+                    "IsActive BOOL NOT NULL," +
                     " Quantity INTEGER NOT NULL);";
 
                 command.ExecuteNonQuery();
@@ -56,6 +56,8 @@ namespace Create
                     " Quantity INTEGER NOT NULL," +
                     " ProductPrice REAL NOT NULL," +
                     " TotalPrice REAL NOT NULL," +
+                    " Adress TEXT NOT NULL," +
+                    " Number TEXT NOT NULL," +
                     " FOREIGN KEY(ProductId) REFERENCES Products(Id)," +
                     "FOREIGN KEY(ProductPrice) REFERENCES Products(Price));";
 
