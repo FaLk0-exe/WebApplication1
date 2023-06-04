@@ -32,12 +32,12 @@ namespace Pharm.DLL.Services
                 throw new ArgumentException("User must be at least 18 years old", nameof(user.BirthDate));
             }
 
-            if (_userRepository.GetUserByName(user.Name) != null)
+          /*  if (_userRepository.GetUserByName(user.Name) != null)
             {
                 throw new ArgumentException("User with this name already exists", nameof(user.Name));
-            }
+            }*/
 
-            if (user.Password < 8 || user.Password > 20)
+            if (user.Password.Length < 8 || user.Password.Length > 20)
             {
                 throw new ArgumentException("Password must be between 8 and 20 characters long", nameof(user.Password));
             }

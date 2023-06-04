@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="entity\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pharm.DLL\Pharm.DLL.csproj" />
   </ItemGroup>
 

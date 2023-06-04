@@ -7,7 +7,7 @@ namespace WebApplication1.VM
     {
         public string Name { get; set; } = null!;
 
-        public long Password { get; set; }
+        public string Password { get; set; }
 
         public DateTime BirthDate { get; set; }
 

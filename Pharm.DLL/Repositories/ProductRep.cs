@@ -19,13 +19,13 @@ namespace Pharm.DLL.Repositories
         public void CreateProduct(Product product)
         {
             connection.Open();
-            using (var command = new SqliteCommand("INSERT INTO Product (PName, Price, Quantity,Description) VALUES (@PName, @Price, @Quantity,@Description)", connection))
+            using (var command = new SqliteCommand("INSERT INTO Product (PName, Price, Quantity,Description) VALUES (@PName, @Price, @Quantity,@Description,@IsActive)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@PName", product.Pname));
                 command.Parameters.Add(new SqliteParameter("@Price", product.Price));
                 command.Parameters.Add(new SqliteParameter("@Quantity", product.Quantity));
                 command.Parameters.Add(new SqliteParameter("@Description",product.Description));
-
+                command.Parameters.Add(new SqliteParameter("@IsActive", true));
                 command.ExecuteNonQuery();
             }
             connection.Close();
@@ -33,9 +33,10 @@ namespace Pharm.DLL.Repositories
 
         public void UpdateProduct(Product product)
         {
-            using (var command = new SqliteCommand("UPDATE Product set PName = @PName, Price = @Price, Quantity = @Quantity,Description=@Description WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("UPDATE Product set IsActive = @IsActive, PName = @PName, Price = @Price, Quantity = @Quantity,Description=@Description WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", product.Id));
+                command.Parameters.Add(new SqliteParameter("@IsActive", product.IsActive));
                 command.Parameters.Add(new SqliteParameter("@PName", product.Pname));
                 command.Parameters.Add(new SqliteParameter("@Price", product.Price));
                 command.Parameters.Add(new SqliteParameter("@Quantity", product.Quantity));
@@ -72,7 +73,8 @@ namespace Pharm.DLL.Repositories
                             Pname = (string)reader["PName"],
                             Price = (double)reader["Price"],
                             Quantity = (long)reader["Quantity"],
-                            Description = (string)reader["Description"]
+                            Description = (string)reader["Description"],
+                            IsActive = (bool)reader["IsActive"]
                         };
                         
                         return product;
@@ -100,7 +102,8 @@ namespace Pharm.DLL.Repositories
                             Pname = (string)reader["PName"],
                             Price = (double)reader["Price"],
                             Quantity = (long)reader["Quantity"],
-                            Description = (string)reader["Description"]
+                            Description = (string)reader["Description"],
+                            IsActive = (bool)reader["IsActive"]
                         };
 
                         products.Add(product);
@@ -129,7 +132,8 @@ namespace Pharm.DLL.Repositories
                             Pname = (string)reader["PName"],
                             Price = (double)reader["Price"],
                             Quantity = (long)reader["Quantity"],
-                            Description = (string)reader["Description"]
+                            Description = (string)reader["Description"],
+                            IsActive = (bool)reader["IsActive"]
                         };
 
                         products.Add(product);

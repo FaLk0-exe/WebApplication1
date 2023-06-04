@@ -11,10 +11,10 @@ namespace Pharm.DLL.DI
     public static class Dependency
     {
         
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void AddDependencies(this IServiceCollection services)
         {
                
-            services.AddSingleton<SqliteConnection>(provider => new SqliteConnection("Data Source=C:/Users/User/source/repos/db.DAL/user.db"));
+            services.AddSingleton<SqliteConnection>(provider => new SqliteConnection("Data Source=C:\\Users\\aprox\\OneDrive\\Рабочий стол\\Flaffyy\\db.DAL\\user.db"));
             
 
             services.AddTransient<IOrderDetailsRepository, OrderDetailsRep>();

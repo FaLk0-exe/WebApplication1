@@ -38,17 +38,14 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public ActionResult Delete([FromServices] ProductService productService, int id)
+        public ActionResult Toggle([FromServices] IProductRepository productRepository,[FromServices] ProductService productService, int id)
         {
-            try
-            {
-                productService.DeleteProduct(id);
+            var product = productRepository.GetProduct(id);
+            if (product is null)
+                return NotFound();
+            product.IsActive = !product.IsActive;
+            productService.EditProduct(product);
                 return Redirect("/product/get");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
         }
 
         public ActionResult Update([FromServices] IProductRepository productRepository, [FromServices] ProductService productService, int id)

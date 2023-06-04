@@ -14,5 +14,6 @@ public class Product
     public double Price { get; set; }
 
     public long Quantity { get; set; }
+    public bool IsActive { get; set; }
 
 }

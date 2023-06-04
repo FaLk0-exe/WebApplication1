@@ -8,9 +8,12 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+            @if (Context.User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Pname)
             </th>
@@ -20,35 +23,79 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
+            @if (Context.User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+            }
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                    @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
+        @if (Context.User.IsInRole("Admin"))
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
+                        @if (item.IsActive)
+                        {
+                            @Html.ActionLink("Деактивувати", "Toggle", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Активувати", "Deactivate", new { id = item.Id })
+                        }
+
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            @foreach (var item in Model.Where(s => s.IsActive))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            @Html.ActionLink("У кошик", "Add","Cart", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Купити", "Details","Order", new { id = item.Id })
+                        }
+
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
