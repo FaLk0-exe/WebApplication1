@@ -19,7 +19,7 @@ namespace Pharm.DLL.Repositories
         public void CreateProduct(Product product)
         {
             connection.Open();
-            using (var command = new SqliteCommand("INSERT INTO Product (PName, Price, Quantity,Description) VALUES (@PName, @Price, @Quantity,@Description,@IsActive)", connection))
+            using (var command = new SqliteCommand("INSERT INTO Product (PName, Price, Quantity,Description,IsActive    ) VALUES (@PName, @Price, @Quantity,@Description,@IsActive)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@PName", product.Pname));
                 command.Parameters.Add(new SqliteParameter("@Price", product.Price));
@@ -74,7 +74,7 @@ namespace Pharm.DLL.Repositories
                             Price = (double)reader["Price"],
                             Quantity = (long)reader["Quantity"],
                             Description = (string)reader["Description"],
-                            IsActive = (bool)reader["IsActive"]
+                            IsActive = Convert.ToBoolean((long)reader["IsActive"])
                         };
                         
                         return product;
@@ -103,7 +103,7 @@ namespace Pharm.DLL.Repositories
                             Price = (double)reader["Price"],
                             Quantity = (long)reader["Quantity"],
                             Description = (string)reader["Description"],
-                            IsActive = (bool)reader["IsActive"]
+                            IsActive = Convert.ToBoolean((long)reader["IsActive"])
                         };
 
                         products.Add(product);
@@ -133,7 +133,7 @@ namespace Pharm.DLL.Repositories
                             Price = (double)reader["Price"],
                             Quantity = (long)reader["Quantity"],
                             Description = (string)reader["Description"],
-                            IsActive = (bool)reader["IsActive"]
+                            IsActive = Convert.ToBoolean((long)reader["IsActive"])
                         };
 
                         products.Add(product);

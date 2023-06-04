@@ -33,6 +33,7 @@ namespace Create
                     " PName TEXT NOT NULL," +
                     " Price REAL NOT NULL," +
                     " Description TEXT NOT NULL," +
+                    "IsActive BOOL NOR NULL," +
                     " Quantity INTEGER NOT NULL);";
 
                 command.ExecuteNonQuery();
