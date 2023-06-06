@@ -10157,11 +10157,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\WebApplication1\\WebApplication1.csproj",
+      "projectPath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\WebApplication1\\WebApplication1.csproj",
       "packagesPath": "C:\\Users\\aprox\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\WebApplication1\\obj\\",
+      "outputPath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -10184,8 +10184,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\Pharm.DLL\\Pharm.DLL.csproj": {
-              "projectPath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\Pharm.DLL\\Pharm.DLL.csproj"
+            "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\Pharm.DLL\\Pharm.DLL.csproj": {
+              "projectPath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\Pharm.DLL\\Pharm.DLL.csproj"
             }
           }
         }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ej4+T9gZG4kLX6q5P3edloMCk2P5PfyX4iF0qkVlicH+PaTVbBX36hZSOeylV8Ue2foNnv1Pa83LW6utZ2KG0g==",
+  "dgSpecHash": "gq8qpJSvJnKR7S/qF+rR2G6eFx+YfLvOKvmFzCIwRa2Jbjo963CJxXTg401SBi8+mfnYK23m1f5HcSGy8IF/Ew==",
   "success": true,
-  "projectFilePath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\db.DAL\\Pharm.DAL.csproj",
+  "projectFilePath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\db.DAL\\Pharm.DAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\aprox\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\aprox\\.nuget\\packages\\microsoft.data.sqlite\\7.0.5\\microsoft.data.sqlite.7.0.5.nupkg.sha512",

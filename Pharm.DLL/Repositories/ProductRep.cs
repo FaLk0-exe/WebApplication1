@@ -33,6 +33,7 @@ namespace Pharm.DLL.Repositories
 
         public void UpdateProduct(Product product)
         {
+            connection.Open();
             using (var command = new SqliteCommand("UPDATE Product set IsActive = @IsActive, PName = @PName, Price = @Price, Quantity = @Quantity,Description=@Description WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", product.Id));
@@ -44,16 +45,19 @@ namespace Pharm.DLL.Repositories
 
                 command.ExecuteNonQuery();
             }
+            connection.Close();
         }
 
         public void DeleteProduct(long id)
         {
+            connection.Open();
             using (var command = new SqliteCommand("DELETE FROM Product WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
 
                 command.ExecuteNonQuery();
             }
+            connection.Close();
         }
 
         public Product GetProduct(long id)

@@ -20,6 +20,7 @@ namespace Pharm.DLL.Repositories
         {
             using (var con = connection)
             {
+                connection.Open();
                 using (var command = new SqliteCommand("INSERT INTO UserOrders (UserId, OrderDate, Price, StatusId, ProductPrice,Address) OUTPUT INSERTED.ID VALUES (@UserId, @OrderDate, @Price, @StatusId,@Address,@Number)", connection))
                 {
                     command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
@@ -35,6 +36,7 @@ namespace Pharm.DLL.Repositories
 
         public void UpdateUserOrder(UserOrder userOrder)
         {
+            connection.Open();
             using (var command = new SqliteCommand("UPDATE UserOrders SET UserId = @UserId, OrderDate = @OrderDate, Price = @Price, StatusId = @StatusId,Address=@Address,Number=@Number WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", userOrder.Id));
@@ -47,20 +49,24 @@ namespace Pharm.DLL.Repositories
 
                 command.ExecuteNonQuery();
             }
+            connection.Close();
         }
 
         public void DeleteUserOrder(long id)
         {
+            connection.Open();
             using (var command = new SqliteCommand("DELETE FROM UserOrders WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
 
                 command.ExecuteNonQuery();
             }
+            connection.Close();
         }
 
         public UserOrder GetUserOrder(long id)
         {
+            connection.Open();
             using (var command = new SqliteCommand(
                 "SELECT uo.Id, uo.UserId, uo.StatusId, uo.Price, uo.OrderDate " +
                 "FROM UserOrders uo " +
@@ -83,16 +89,18 @@ namespace Pharm.DLL.Repositories
                             Address = (string)reader["Address"],
                             Number = (string)reader["Number"]
                         };
-
+                        connection.Close();
                         return userOrder;
                     }
                 }
             }
+            connection.Close();
             return null;
         }
 
         public List<UserOrder> GetAllUserOrders()
         {
+            connection.Open();
             var userOrders = new List<UserOrder>();
             using (var command = new SqliteCommand(
                 "SELECT uo.Id, uo.UserId, uo.StatusId, uo.Price, uo.OrderDate " +
@@ -118,6 +126,7 @@ namespace Pharm.DLL.Repositories
                     }
                 }
             }
+            connection.Close();
             return userOrders;
         }
 

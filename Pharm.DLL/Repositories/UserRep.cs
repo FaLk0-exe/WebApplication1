@@ -17,6 +17,7 @@ namespace Pharm.DLL.Repositories
 
         public void CreateUser(User user)
         {
+            connection.Open();
             using (var command = new SqliteCommand("INSERT INTO Users (Name, Password, BirthDate) VALUES (@Name, @Password, @BirthDate)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Name", user.Name));
@@ -26,10 +27,12 @@ namespace Pharm.DLL.Repositories
 
                 command.ExecuteNonQuery();
             }
+            connection.Close();
         }
 
         public void UpdateUser(User user)
         {
+            connection.Open();
             using (var command = new SqliteCommand("UPDATE Users SET Name = @Name, Password = @Password, BirthDate = @BirthDate WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", user.Id));
@@ -40,20 +43,24 @@ namespace Pharm.DLL.Repositories
 
                 command.ExecuteNonQuery();
             }
+            connection.Close();
         }
 
         public void DeleteUser(long id)
         {
+            connection.Open();
             using (var command = new SqliteCommand("DELETE FROM Users WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
 
                 command.ExecuteNonQuery();
             }
+            connection.Close();
         }
 
         public User GetUserById(long id)
         {
+            connection.Open();
             using (var command = new SqliteCommand("SELECT * FROM Users WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
@@ -75,14 +82,14 @@ namespace Pharm.DLL.Repositories
                     }
                 }
             }
-
+            connection.Close();
             return null;
         }
 
         public List<User> GetAllUsers()
         {
             var users = new List<User>();
-
+            connection.Open();
             using (var command = new SqliteCommand("SELECT * FROM Users", connection))
             {
                 using (var reader = command.ExecuteReader())
@@ -101,7 +108,7 @@ namespace Pharm.DLL.Repositories
                     }
                 }
             }
-
+            connection.Close();
             return users;
         }
 

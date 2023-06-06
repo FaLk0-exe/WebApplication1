@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gXlmw/yLQkAwp7dl14MHftXvW/yvbX9BNSeR84y2+RXfXRwXBlVtYfgbNw2OizeDNxPT/44H5soT0JKh/nOKSQ==",
+  "dgSpecHash": "yWCkTsyXB+FQTWtsfPgySpcQgSAI8SbI7+ceaRXxlQC9r8Pxv7csLRovGyU/1BI+x6ebJn1Wlv/zyF8hyLNdFA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\WebApplication1\\WebApplication1.csproj",
+  "projectFilePath": "C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\aprox\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\aprox\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.11\\microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
