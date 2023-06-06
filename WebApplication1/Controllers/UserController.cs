@@ -29,6 +29,10 @@ namespace WebApplication1.Controllers
             return RedirectToAction(controllerName: "Product", actionName: "Get");
         }
 
-
+        public ActionResult SignOut()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction(controllerName: "Product", actionName: "Get");
+        }
     }
 }

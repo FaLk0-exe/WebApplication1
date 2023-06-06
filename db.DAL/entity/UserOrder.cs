@@ -11,7 +11,7 @@ public partial class UserOrder
 
     public double Price { get; set; }
 
-    public DateTime OrderDate { get; set; } 
+    public string OrderDate { get; set; } 
 
     public long StatusId { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿@using Pharm.DAL.entity;
 @using Pharm.DAL;
 @model List<UserOrder>
-table class="table">
+<table class="table">
 <thead>
     <tr>
         <th>
@@ -14,8 +14,10 @@ table class="table">
             Ціна
         </th>
         <th>
-            Роль
+            Статус замовлення
         </th>
+            <th>
+            </th>
     </tr>
 </thead>
 <tbody>
@@ -26,7 +28,7 @@ table class="table">
                 @item.Id.ToString("0000")
             </td>
             <td>
-                @item.OrderDate.ToString("dd.MM.yyyy HH:mm:ss")
+                @DateTime.Parse(item.OrderDate).ToString("dd.MM.yyyy HH:mm:ss")
             </td>
             <td>
                 @item.Price

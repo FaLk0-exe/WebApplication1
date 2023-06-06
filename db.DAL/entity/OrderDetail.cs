@@ -17,6 +17,7 @@ public partial class OrderDetail
     public double ProductPrice { get; set; }
 
     public long UserOrderId { get; set; }
+    public string ProductTitle { get; set; }
 
 
 }

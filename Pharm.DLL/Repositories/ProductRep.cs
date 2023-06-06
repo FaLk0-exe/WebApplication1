@@ -19,7 +19,7 @@ namespace Pharm.DLL.Repositories
         public void CreateProduct(Product product)
         {
             connection.Open();
-            using (var command = new SqliteCommand("INSERT INTO Product (PName, Price, Quantity,Description,IsActive    ) VALUES (@PName, @Price, @Quantity,@Description,@IsActive)", connection))
+            using (var command = new SqliteCommand("INSERT INTO Products (PName, Price, Quantity,Description,IsActive    ) VALUES (@PName, @Price, @Quantity,@Description,@IsActive)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@PName", product.Pname));
                 command.Parameters.Add(new SqliteParameter("@Price", product.Price));
@@ -34,7 +34,7 @@ namespace Pharm.DLL.Repositories
         public void UpdateProduct(Product product)
         {
             connection.Open();
-            using (var command = new SqliteCommand("UPDATE Product set IsActive = @IsActive, PName = @PName, Price = @Price, Quantity = @Quantity,Description=@Description WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("UPDATE Products set IsActive = @IsActive, PName = @PName, Price = @Price, Quantity = @Quantity,Description=@Description WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", product.Id));
                 command.Parameters.Add(new SqliteParameter("@IsActive", product.IsActive));
@@ -51,7 +51,7 @@ namespace Pharm.DLL.Repositories
         public void DeleteProduct(long id)
         {
             connection.Open();
-            using (var command = new SqliteCommand("DELETE FROM Product WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("DELETE FROM Products WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
 
@@ -63,7 +63,7 @@ namespace Pharm.DLL.Repositories
         public Product GetProduct(long id)
         {
             connection.Open();
-            using (var command = new SqliteCommand("SELECT * FROM Product WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("SELECT * FROM Products WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
 
@@ -94,7 +94,7 @@ namespace Pharm.DLL.Repositories
             connection.Open();
             var products = new List<Product>();
 
-            using (var command = new SqliteCommand("SELECT * FROM Product", connection))
+            using (var command = new SqliteCommand("SELECT * FROM Products", connection))
             {
                 using (var reader = command.ExecuteReader())
                 {
@@ -125,7 +125,7 @@ namespace Pharm.DLL.Repositories
             connection.Open();
             var products = new List<Product>();
 
-            using (var command = new SqliteCommand("SELECT * FROM Product", connection))
+            using (var command = new SqliteCommand("SELECT * FROM Products", connection))
             {
                 using (var reader = command.ExecuteReader())
                 {

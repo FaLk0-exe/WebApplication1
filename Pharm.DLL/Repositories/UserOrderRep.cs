@@ -7,7 +7,7 @@ using Pharm.DLL.Interfaces;
 
 namespace Pharm.DLL.Repositories
 {
-    public class UserOrderRep: IUserOrderRepository
+    public class UserOrderRep : IUserOrderRepository
     {
         private readonly SqliteConnection connection;
 
@@ -16,35 +16,39 @@ namespace Pharm.DLL.Repositories
             this.connection = connection;
         }
 
-        public int CreateUserOrder(UserOrder userOrder)
+        public long CreateUserOrder(UserOrder userOrder)
         {
-            using (var con = connection)
+            long id;
+            connection.Open();
+            using (var command = new SqliteCommand("INSERT INTO UserOrders (UserId, OrderDate, Price, StatusId,Adress,Number) VALUES (@UserId, @OrderDate, @Price, @StatusId,@Address,@Number)", connection))
             {
-                connection.Open();
-                using (var command = new SqliteCommand("INSERT INTO UserOrders (UserId, OrderDate, Price, StatusId, ProductPrice,Address) OUTPUT INSERTED.ID VALUES (@UserId, @OrderDate, @Price, @StatusId,@Address,@Number)", connection))
-                {
-                    command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
-                    command.Parameters.Add(new SqliteParameter("@OrderDate", userOrder.OrderDate));
-                    command.Parameters.Add(new SqliteParameter("@Price", userOrder.Price));
-                    command.Parameters.Add(new SqliteParameter("@StatusId", userOrder.StatusId));
-                    command.Parameters.Add(new SqliteParameter("@Address", userOrder.Address));
-                    command.Parameters.Add(new SqliteParameter("@Number", userOrder.Number));
-                    return (int)command.ExecuteScalar();
-                }
+                command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
+                command.Parameters.Add(new SqliteParameter("@OrderDate", userOrder.OrderDate));
+                command.Parameters.Add(new SqliteParameter("@Price", userOrder.Price));
+                command.Parameters.Add(new SqliteParameter("@StatusId", userOrder.StatusId));
+                command.Parameters.Add(new SqliteParameter("@Address", userOrder.Address));
+                command.Parameters.Add(new SqliteParameter("@Number", userOrder.Number));
+                command.ExecuteNonQuery();
             }
+            using (var command = new SqliteCommand("SELECT last_insert_rowid() AS NewRecordId",connection))
+            {
+                id = (long)command.ExecuteScalar();
+            }
+            connection.Close();
+            return id;
         }
 
         public void UpdateUserOrder(UserOrder userOrder)
         {
             connection.Open();
-            using (var command = new SqliteCommand("UPDATE UserOrders SET UserId = @UserId, OrderDate = @OrderDate, Price = @Price, StatusId = @StatusId,Address=@Address,Number=@Number WHERE Id = @Id", connection))
+            using (var command = new SqliteCommand("UPDATE UserOrders SET UserId = @UserId, OrderDate = @OrderDate, Price = @Price, StatusId = @StatusId,Adress=@Adress,Number=@Number WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", userOrder.Id));
                 command.Parameters.Add(new SqliteParameter("@UserId", userOrder.UserId));
                 command.Parameters.Add(new SqliteParameter("@OrderDate", userOrder.OrderDate));
                 command.Parameters.Add(new SqliteParameter("@Price", userOrder.Price));
                 command.Parameters.Add(new SqliteParameter("@StatusId", userOrder.StatusId));
-                command.Parameters.Add(new SqliteParameter("@Address", userOrder.Address));
+                command.Parameters.Add(new SqliteParameter("@Adress", userOrder.Address));
                 command.Parameters.Add(new SqliteParameter("@Number", userOrder.Number));
 
                 command.ExecuteNonQuery();
@@ -68,11 +72,9 @@ namespace Pharm.DLL.Repositories
         {
             connection.Open();
             using (var command = new SqliteCommand(
-                "SELECT uo.Id, uo.UserId, uo.StatusId, uo.Price, uo.OrderDate " +
-                "FROM UserOrders uo " +
-                "INNER JOIN Users u ON uo.UserId = u.Id " +
-                "INNER JOIN OrderStatus os ON uo.StatusId = os.Id " +
-                "WHERE uo.Id = @Id", connection))
+                "SELECT Id, UserId, StatusId, Price, OrderDate,Adress,Number " +
+                "FROM UserOrders " +
+                "WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
                 using (var reader = command.ExecuteReader())
@@ -85,8 +87,8 @@ namespace Pharm.DLL.Repositories
                             UserId = (long)reader["UserId"],
                             StatusId = (long)reader["StatusId"],
                             Price = (double)reader["Price"],
-                            OrderDate = (DateTime)reader["OrderDate"],
-                            Address = (string)reader["Address"],
+                            OrderDate = (string)reader["OrderDate"],
+                            Address = (string)reader["Adress"],
                             Number = (string)reader["Number"]
                         };
                         connection.Close();
@@ -103,10 +105,8 @@ namespace Pharm.DLL.Repositories
             connection.Open();
             var userOrders = new List<UserOrder>();
             using (var command = new SqliteCommand(
-                "SELECT uo.Id, uo.UserId, uo.StatusId, uo.Price, uo.OrderDate " +
-                "FROM UserOrders uo " +
-                "INNER JOIN Users u ON uo.UserId = u.Id " +
-                "INNER JOIN OrderStatus os ON uo.StatusId = os.Id", connection))
+                "SELECT Id, UserId, StatusId, Price, OrderDate,Adress,Number " +
+                "FROM UserOrders", connection))
             {
                 using (var reader = command.ExecuteReader())
                 {
@@ -118,8 +118,8 @@ namespace Pharm.DLL.Repositories
                             UserId = (long)reader["UserId"],
                             StatusId = (long)reader["StatusId"],
                             Price = (double)reader["Price"],
-                            OrderDate = (DateTime)reader["OrderDate"],
-                            Address = (string)reader["Address"],
+                            OrderDate = (string)reader["OrderDate"],
+                            Address = (string)reader["Adress"],
                             Number = (string)reader["Number"]
                         };
                         userOrders.Add(userOrder);
@@ -130,6 +130,6 @@ namespace Pharm.DLL.Repositories
             return userOrders;
         }
 
-       
+
     }
 }

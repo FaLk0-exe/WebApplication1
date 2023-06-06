@@ -14,14 +14,13 @@ namespace Pharm.DLL.DI
         public static void AddDependencies(this IServiceCollection services)
         {
                
-            services.AddSingleton<SqliteConnection>(provider => new SqliteConnection("Data Source=C:\\Users\\aprox\\OneDrive\\Рабочий стол\\dfas\\db.DAL\\user.db"));
+            services.AddSingleton<SqliteConnection>(provider => new SqliteConnection("Data Source=C:\\Users\\aprox\\OneDrive\\Рабочий стол\\s\\db.DAL\\user.db"));
             
 
             services.AddTransient<IOrderDetailsRepository, OrderDetailsRep>();
             services.AddTransient<IUserOrderRepository, UserOrderRep>();
 
             services.AddTransient<IUserRepository, UserRep>();
-            services.AddTransient<IStatusRepository,StatusRep>();
 
             services.AddTransient<IProductRepository, ProductRep>();
             services.AddTransient<ProductService>();

@@ -1,44 +1,77 @@
 ﻿@using Pharm.DAL;
 @model OrderDetailsModel
-
-<dl class="row">
-    <dt class="col-sm-2">
-        Номер замовлення
-    </dt>
-    <dd class="col-sm-10">
-        @Model.UserOrder.Id.ToString("D4")
-    </dd>
-    <dt class="col-sm-2">
-        Дата замовлення
-    </dt>
-    <dd class="col-sm-10">
-        @Model.UserOrder.OrderDate.ToString("dd.MM.yyyy HH:mm:ss")
-    </dd>
+<dt class="col-sm-2">
+    Номер замовлення
+</dt>
+<dd class="col-sm-10">
+    @Model.UserOrder.Id.ToString("D4")
+</dd>
+<dt class="col-sm-2">
+    Дата замовлення
+</dt>
+<dd class="col-sm-10">
+    @Model.UserOrder.OrderDate
+</dd>
+@if (Context.User.IsInRole("Admin"))
+{
     <dt class="col-sm-2">
         Ім'я клієнту
     </dt>
     <dd class="col-sm-10">
         Егор
     </dd>
-    <dd class="col-sm-2">
-        Номер телефону
-    </dd>
-    <dd class="col-sm-10">
-        @Model.UserOrder.Number
-    </dd>
-    <dd class="col-sm-2">
-        Адреса
-    </dd>
-    <dd class="col-sm-10">
-        @Model.UserOrder.Address
-    </dd>
-    <dd class="col-sm-2">
-        Статус замовлення
-    </dd>
+}
+<dt class="col-sm-2">
+    Номер телефону
+</dt>
+<dd class="col-sm-10">
+    @Model.UserOrder.Number
+</dd>
+<dt class="col-sm-2">
+    Адреса
+</dt>
+<dd class="col-sm-10">
+    @Model.UserOrder.Address
+</dd>
+<dt class="col-sm-2">
+    Статус замовлення
+</dt>
+@if (!Context.User.IsInRole("Admin"))
+{
     <dd class="col-sm-10">
         @StatusHelper.GetTitle(Model.UserOrder.StatusId)
     </dd>
-</dl>
+}
+else
+{
+    if (Model.UserOrder.StatusId != 3 && Model.UserOrder.StatusId != 5)
+    {
+        <select id="status-id">
+            @if (Model.UserOrder.StatusId == 1)
+            {
+            <option value="2">Підтверджено</option>
+            <option value="3">Відхилено</option>
+            }
+            @if (Model.UserOrder.StatusId == 2)
+            {
+            <option value="2">Підтверджено</option>
+            <option value="4">Відправлено</option>
+            }
+            @if (Model.UserOrder.StatusId == 4)
+            {
+            <option value="4">Відправлено</option>
+            <option value="5">Завершено</option>
+            }
+        </select>
+        <button class="btn btn-primary" onclick="changeStatus(@(Model.UserOrder.Id))"> Оновити статус</button>
+    }
+    else
+    {
+        <dd class="col-sm-10">
+            @StatusHelper.GetTitle(Model.UserOrder.StatusId)
+        </dd>
+    }
+}
 
 <table class="table">
     <thead>
@@ -75,3 +108,13 @@
         }
     </tbody>
 </table>
+@section Scripts
+    {
+    <script>
+        function changeStatus(customerOrderId) {
+            var id = document.getElementById("status-id").value;
+            var url = '@Url.Action("ChangeStatus", "Order")?customerOrderId=' + customerOrderId + '&id=' + id;
+            window.location.href = url;
+        }
+    </script>
+}

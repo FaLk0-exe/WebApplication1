@@ -17,13 +17,13 @@ namespace Pharm.DLL.Repositories
         public void CreateOrderDetails(OrderDetail orderDetail)
         {
             connection.Open();
-            using (var command = new SqliteCommand("INSERT INTO OrderDetails (ProductId, Quantity, TotalPrice) VALUES (@ProductId, @Quantity, @TotalPrice, @ProductPrice)", connection))
+            using (var command = new SqliteCommand("INSERT INTO OrderDetails (ProductId, Quantity, TotalPrice,ProductPrice, UserOrderId) VALUES (@ProductId, @Quantity, @TotalPrice, @ProductPrice, @UserOrderId)", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@ProductId", orderDetail.ProductId));
                 command.Parameters.Add(new SqliteParameter("@Quantity", orderDetail.Quantity));
                 command.Parameters.Add(new SqliteParameter("@TotalPrice", orderDetail.TotalPrice));
                 command.Parameters.Add(new SqliteParameter("@ProductPrice", orderDetail.ProductPrice));
-
+                command.Parameters.Add(new SqliteParameter("@UserOrderId", orderDetail.UserOrderId));
 
                 command.ExecuteNonQuery();
             }
@@ -64,10 +64,9 @@ namespace Pharm.DLL.Repositories
         {
             connection.Open();
             using (var command = new SqliteCommand(
-                       "SELECT od.Id, od.ProductId, od.Quantity, od.TotalPrice, od.ProductPrice " +
-                       "FROM OrderDetails od " +
-                       "INNER JOIN Products p ON od.ProductId = p.Id AND od.ProductPrice = p.Price" +
-                       "WHERE od.Id = @Id", connection))
+                       "SELECT Id, ProductId, Quantity, TotalPrice, ProductPrice,UserOrderId " +
+                       "FROM OrderDetails" +
+                       "WHERE Id = @Id", connection))
             {
                 command.Parameters.Add(new SqliteParameter("@Id", id));
                 using (var reader = command.ExecuteReader())
@@ -98,9 +97,8 @@ namespace Pharm.DLL.Repositories
             connection.Open();
             var orderDetails = new List<OrderDetail>();
             using (var command = new SqliteCommand(
-                       "SELECT od.Id, od.ProductId, od.Quantity, od.TotalPrice, od.ProductPrice " +
-                       "FROM OrderDetails od " +
-                       "INNER JOIN Products p ON od.ProductId = p.Id AND od.ProductPrice = p.Price", connection))
+                       "SELECT Id, ProductId, Quantity, TotalPrice, ProductPrice,UserOrderId " +
+                       "FROM OrderDetails", connection))
             {
                 using (var reader = command.ExecuteReader())
                 {
@@ -112,8 +110,8 @@ namespace Pharm.DLL.Repositories
                             ProductId = (long)reader["ProductId"],
                             Quantity = (long)reader["Quantity"],
                             TotalPrice = (double)reader["TotalPrice"],
-                            ProductPrice = (double)reader["ProductPrice"]
-                            
+                            ProductPrice = (double)reader["ProductPrice"],
+                            UserOrderId = (long)reader["UserOrderId"]
                         };
                         orderDetails.Add(orderDetail);
                     }

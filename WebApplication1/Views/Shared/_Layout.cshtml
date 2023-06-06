@@ -25,6 +25,9 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Get">Корзина(@Context.Session.GetInt32("count"))</a>
                             </li>
                         }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Get">Замовлення</a>
+                        </li>
                     </ul>
                 </div>
             </div>
